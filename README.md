@@ -37,4 +37,4 @@
 7. **Get the Invoke URL**:
 8. **Enable CORS for all methods.**
 ###
-### Create Grocery Shop Web UI with index.html and scripts.js and then upload to s3 bucketl
+### Create Grocery Shop Web UI with index.html and scripts.js and then upload to s3 bucket
