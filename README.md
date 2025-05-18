@@ -1,6 +1,6 @@
 # GroceryItems API - DynamoDB CRUD with Lambda and API Gateway
 
-This project implements a simple RESTful API for managing grocery items using AWS DynamoDB, Lambda functions, and API Gateway REST API.
+This project implements a simple RESTful API for managing grocery items using AWS DynamoDB, Lambda functions, and API Gateway REST API and S3.
 
 ---
 
@@ -28,6 +28,18 @@ Each Lambda function should have an execution role with permission to access the
 
 ## API Gateway Setup (REST API)
 
+## API Gateway Structure
+
+The API Gateway REST API for `GroceryShopAPI` is organized as follows:
+```
+/ (root)
+└── items
+├── GET (Lambda: getItemsLambda)
+└── POST (Lambda: createItemLambda)
+└── {id}
+├── PUT (Lambda: updateItemLambda)
+└── DELETE (Lambda: deleteItemLambda)
+```
 ### 1. Create New REST API
 
 - Go to Amazon API Gateway Console
