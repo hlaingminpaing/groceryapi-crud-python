@@ -7,6 +7,14 @@
 ###
 ### Create Lambda funcion for CRUD
 
+#### for post method
+{
+  "name": "Milk",
+  "price": 3.5,
+  "category": "Dairy",
+  "itemid": "item123"
+}
+
 
 ### Create a REST API in API Gateway
 
