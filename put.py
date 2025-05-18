@@ -14,29 +14,42 @@ def lambda_handler(event, context):
     if 'body' not in event:
         return {
             'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            },
             'body': json.dumps({'error': 'Missing body in the request'})
         }
 
     try:
         # Parse the body and log it
         data = json.loads(event['body'])
-        print("Parsed body:", json.dumps(data))  # Log the parsed body for debugging
+        print("Parsed body:", json.dumps(data))
 
-        # Ensure 'pathParameters' exists and contains 'itemid'
-        if 'pathParameters' not in event or 'itemid' not in event['pathParameters']:
+        # Ensure 'pathParameters' exists and contains 'id'
+        if 'pathParameters' not in event or 'id' not in event['pathParameters']:
             return {
                 'statusCode': 400,
-                'body': json.dumps({'error': "Missing 'itemid' in path parameters"})
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json'
+                },
+                'body': json.dumps({'error': "Missing 'id' in path parameters"})
             }
 
         # Retrieve the item ID from path parameters
-        item_id = event['pathParameters']['itemid']
+        item_id = event['pathParameters']['id']
 
         # Extract and validate fields from the body
-        if 'name' not in data or 'price' not in data or 'category' not in data:
-            missing_fields = [field for field in ['name', 'price', 'category'] if field not in data]
+        required_fields = ['name', 'price', 'category']
+        missing_fields = [field for field in required_fields if field not in data]
+        if missing_fields:
             return {
                 'statusCode': 400,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json'
+                },
                 'body': json.dumps({'error': f"Missing field(s): {', '.join(missing_fields)}"})
             }
 
@@ -51,7 +64,7 @@ def lambda_handler(event, context):
             ':category': data['category']
         }
         expression_attribute_names = {
-            '#name': 'Name'  # Alias 'Name' as '#name'
+            '#name': 'Name'
         }
 
         # Update the item in DynamoDB
@@ -64,15 +77,28 @@ def lambda_handler(event, context):
 
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            },
             'body': json.dumps({'message': 'Item updated successfully'})
         }
+
     except json.JSONDecodeError:
         return {
             'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            },
             'body': json.dumps({'error': "Invalid JSON"})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            },
             'body': json.dumps({'error': str(e)})
         }
