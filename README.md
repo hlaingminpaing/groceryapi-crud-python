@@ -34,11 +34,11 @@ The API Gateway REST API for `GroceryShopAPI` is organized as follows:
 ```
 / (root)
 └── items
-├── GET (Lambda: getItemsLambda)
-└── POST (Lambda: createItemLambda)
-└── {id}
-├── PUT (Lambda: updateItemLambda)
-└── DELETE (Lambda: deleteItemLambda)
+    ├── GET (Lambda: getItemsLambda)
+    ├── POST (Lambda: createItemLambda)
+    └── {id}
+        ├── PUT (Lambda: updateItemLambda)
+        └── DELETE (Lambda: deleteItemLambda)
 ```
 ### 1. Create New REST API
 
